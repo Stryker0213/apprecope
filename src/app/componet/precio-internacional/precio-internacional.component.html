@@ -1,0 +1,16 @@
+<h1>precio-internacional works!</h1>
+<div  class= "container">
+    <h2>Materiales</h2>
+    <table class="table">
+        <thead>
+            <th> Producto</th>
+            <th>Precios</th>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let materiales of precioInternacional.materiales">
+                <td>{{materiales.nomprod}}</td>
+                <td>{{materiales.precios}}</td>
+            </tr>
+            <tbody>
+    </table>
+</div>

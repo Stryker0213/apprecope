@@ -1,0 +1,32 @@
+<h1>Precios al Consumidor</h1>
+<div class="container">
+  <h2>Lista de Precios</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Impuesto</th>
+        <th>Precio sin Impuesto</th>
+        <th>Fecha de Actualización</th>
+        <th>ID</th>
+        <th>Precio Total</th>
+        <th>Nombre del Producto</th>
+        <th>Margen Promedio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of preciosConsumidor">
+        <td>{{ item.fecha | date:'dd/MM/yyyy' }}</td>
+        <td>{{ item.tipo }}</td>
+        <td>{{ item.impuesto | currency:'CRC' }}</td>
+        <td>{{ item.precsinimp | currency:'CRC' }}</td>
+        <td>{{ item.fechaupd | date:'dd/MM/yyyy' }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.preciototal | currency:'CRC' }}</td>
+        <td>{{ item.nomprod }}</td>
+        <td>{{ item.margenpromedio | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
