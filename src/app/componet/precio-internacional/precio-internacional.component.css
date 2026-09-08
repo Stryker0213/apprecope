@@ -1,1 +1,25 @@
-
+.date-filter { align-items: end; background: #eaf7f5; border: 1px solid #cce8e4; border-radius: 18px; display: flex; gap: 1rem; margin-bottom: 2rem; padding: 1rem 1.2rem; }
+.date-filter div { flex: 0 1 220px; }
+.date-filter label { color: var(--brand-dark); display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .4rem; text-transform: uppercase; }
+.date-filter input { background: #fff; border: 1px solid #bad8d4; border-radius: 9px; color: var(--ink); min-height: 42px; padding: .55rem .7rem; width: 100%; }
+.date-filter input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px #cce8e4; outline: none; }
+.filter-line { background: #b8d9d5; height: 1px; margin-bottom: 21px; width: 18px; }
+.apply-button { background: var(--brand); border: 0; border-radius: 9px; color: #fff; font-weight: 800; min-height: 42px; padding: .65rem 1.1rem; }
+.apply-button:hover { background: var(--brand-dark); }
+.apply-button:disabled { cursor: wait; opacity: .6; }
+.clear-button { background: transparent; border: 0; color: var(--brand-dark); font-weight: 700; min-height: 42px; padding: .65rem .35rem; }
+.market-grid { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 2rem; }
+.market-card { align-items: end; background: var(--surface); border-radius: 18px; display: flex; justify-content: space-between; min-height: 160px; padding: 1.25rem; }
+.market-card.featured { background: #0a3a41; color: #fff; }
+.market-value { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -.055em; line-height: 1; margin: 1.4rem 0 0; }
+.change { background: #dff4ea; border-radius: 999px; color: #08734f; font-size: .76rem; font-weight: 800; padding: .35rem .55rem; }
+.change.negative { background: #fee8e6; color: #a92b21; }
+.unit-note { color: var(--muted); font-size: .75rem; }
+.international-table { min-width: 850px; }
+@media (max-width: 1050px) { .market-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .date-filter { align-items: stretch; flex-direction: column; }
+  .date-filter div { flex-basis: auto; }
+  .filter-line { display: none; }
+  .market-grid { grid-template-columns: 1fr; }
+}

@@ -17,8 +17,42 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
+  const recopeRoutes = new Set([
+    '/precio-internacional',
+    '/ventas/precio/consumidor',
+    '/ventas/precio/plantel',
+  ]);
+
+  server.get('/api/recope/*', async (req, res) => {
+    const apiPath = req.path.replace('/api/recope', '');
+    if (!recopeRoutes.has(apiPath)) {
+      res.status(404).json({ message: 'Recurso no disponible' });
+      return;
+    }
+
+    const target = new URL(`https://api.recope.go.cr${apiPath}`);
+    if (apiPath === '/precio-internacional') {
+      for (const key of ['inicio', 'fin']) {
+        const value = req.query[key];
+        if (typeof value === 'string' && /^\d{8}$/.test(value)) target.searchParams.set(key, value);
+      }
+    }
+
+    try {
+      const upstream = await fetch(target, {
+        headers: { Accept: 'application/json' },
+        signal: AbortSignal.timeout(12_000),
+      });
+      const body = await upstream.text();
+      res.status(upstream.status);
+      res.setHeader('Content-Type', upstream.headers.get('content-type') || 'application/json');
+      res.setHeader('Cache-Control', 'public, max-age=300');
+      res.send(body);
+    } catch {
+      res.status(502).json({ message: 'El servicio de RECOPE no respondió a tiempo' });
+    }
+  });
+
   // Serve static files from /browser
   server.get('**', express.static(browserDistFolder, {
     maxAge: '1y',

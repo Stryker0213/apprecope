@@ -1,32 +1,35 @@
-<h1>precios-plantel</h1>
-<div class="container">
-  <h2>Lista de Precios</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Tipo</th>
-        <th>Impuesto</th>
-        <th>Precio sin Impuesto</th>
-        <th>Fecha de Actualización</th>
-        <th>ID</th>
-        <th>Precio Total</th>
-        <th>Nombre del Producto</th>
-        <th>Margen Promedio</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of precios-plantel">
-        <td>{{ item.fecha | date:'dd/MM/yyyy' }}</td>
-        <td>{{ item.tipo }}</td>
-        <td>{{ item.impuesto | currency:'CRC' }}</td>
-        <td>{{ item.precsinimp | currency:'CRC' }}</td>
-        <td>{{ item.fechaupd | date:'dd/MM/yyyy' }}</td>
-        <td>{{ item.id }}</td>
-        <td>{{ item.preciototal | currency:'CRC' }}</td>
-        <td>{{ item.nomprod }}</td>
-        <td>{{ item.margenpromedio | number:'1.2-2' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<section aria-labelledby="titulo-plantel">
+  <header class="page-heading">
+    <div><p class="eyebrow">Terminales de venta</p><h1 id="titulo-plantel">Precios en plantel</h1><p class="lede">Explora el catálogo completo de precios publicados para las terminales de distribución de RECOPE.</p></div>
+    <div class="heading-actions">
+      @if (actualizado) { <span class="freshness"><span class="freshness-dot"></span>Actualizado {{ actualizado }}</span> }
+      <button class="refresh-button" type="button" (click)="cargar()" [disabled]="cargando"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6v5h-5M4 18v-5h5M18.5 9A7 7 0 0 0 6 6.5L4 11M5.5 15A7 7 0 0 0 18 17.5l2-4.5"/></svg>Actualizar</button>
+    </div>
+  </header>
+
+  @if (cargando && !precios.length) {
+    <div class="panel status-state" aria-live="polite"><span class="spinner"></span><strong>Consultando precios de plantel</strong><p>Estamos conectando con el servicio público de RECOPE.</p></div>
+  } @else if (error) {
+    <div class="panel status-state" role="alert"><span class="error-icon">!</span><strong>No pudimos cargar los datos</strong><p>{{ error }}</p><button class="retry-button" type="button" (click)="cargar()">Reintentar</button></div>
+  } @else {
+    <div class="metric-grid">
+      <article class="metric-card featured"><p class="metric-label">Productos publicados</p><p class="metric-value">{{ precios.length }}</p><p class="metric-detail">Registros vigentes en el catálogo</p></article>
+      <article class="metric-card"><p class="metric-label">Menor valor reportado</p><p class="metric-value"><sup>₡</sup>{{ numero(masBajo?.preciototal || '0') | number:'1.0-2' }}</p><p class="metric-detail">{{ masBajo?.nomprod }}</p></article>
+      <article class="metric-card"><p class="metric-label">Mayor valor reportado</p><p class="metric-value"><sup>₡</sup>{{ numero(masAlto?.preciototal || '0') | number:'1.0-2' }}</p><p class="metric-detail">{{ masAlto?.nomprod }}</p></article>
+    </div>
+    <div class="panel">
+      <div class="panel-toolbar">
+        <h2 class="panel-title">Catálogo de plantel <span class="result-count">{{ filtrados.length }} resultados</span></h2>
+        <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="visually-hidden">Buscar producto</span><input type="search" [(ngModel)]="busqueda" placeholder="Buscar producto"></label>
+      </div>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Producto</th><th>Unidad / tipo</th><th>Precio base</th><th>Impuesto</th><th>Precio total</th></tr></thead>
+        <tbody>
+          @for (item of filtrados; track item.id) {
+            <tr><td class="product-cell"><strong>{{ item.nomprod }}</strong><small>Código {{ item.id }}</small></td><td><span class="type-badge">{{ item.tipo }}</span></td><td class="money">₡{{ numero(item.precsinimp) | number:'1.2-2' }}</td><td class="money">₡{{ numero(item.impuesto) | number:'1.2-2' }}</td><td class="money total">₡{{ numero(item.preciototal) | number:'1.2-2' }}</td></tr>
+          } @empty { <tr><td colspan="5"><div class="status-state"><strong>Sin coincidencias</strong><p>Prueba con otro nombre de producto.</p></div></td></tr> }
+        </tbody>
+      </table></div>
+    </div>
+  }
+</section>

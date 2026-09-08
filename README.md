@@ -1,27 +1,23 @@
-# Apprecope
+# Combustibles CR
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.7.
+Explorador web de los tres recursos públicos documentados por RECOPE:
+
+- precios vigentes al consumidor;
+- precios vigentes en plantel;
+- precios internacionales, con filtro opcional por fechas.
+
+La aplicación usa un proxy local y otro en el servidor SSR para evitar el bloqueo CORS del API oficial.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Ejecuta `npm start` y abre `http://localhost:4200/`. El proxy de desarrollo se carga automáticamente.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Ejecuta `npm run build`. Para servir el resultado con SSR y el proxy incluido, ejecuta después `npm run serve:ssr:apprecope`.
 
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Fuente de datos: [API pública de RECOPE](https://datosabiertos.recope.go.cr/servicio-api).

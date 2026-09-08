@@ -1,16 +1,36 @@
-<h1>precio-internacional works!</h1>
-<div  class= "container">
-    <h2>Materiales</h2>
-    <table class="table">
-        <thead>
-            <th> Producto</th>
-            <th>Precios</th>
-        </thead>
-        <tbody>
-            <tr *ngFor = "let materiales of precioInternacional.materiales">
-                <td>{{materiales.nomprod}}</td>
-                <td>{{materiales.precios}}</td>
-            </tr>
-            <tbody>
-    </table>
-</div>
+<section aria-labelledby="titulo-internacional">
+  <header class="page-heading">
+    <div><p class="eyebrow">Referencia semanal</p><h1 id="titulo-internacional">Mercado internacional</h1><p class="lede">Compara el valor reportado por RECOPE para crudo y combustibles terminados en el periodo que necesites.</p></div>
+  </header>
+
+  <form class="date-filter" (ngSubmit)="cargar()">
+    <div><label for="inicio">Desde</label><input id="inicio" name="inicio" type="date" [(ngModel)]="inicio"></div>
+    <span class="filter-line" aria-hidden="true"></span>
+    <div><label for="fin">Hasta</label><input id="fin" name="fin" type="date" [(ngModel)]="fin"></div>
+    <button class="apply-button" type="submit" [disabled]="cargando">Consultar periodo</button>
+    @if (inicio || fin) { <button class="clear-button" type="button" (click)="limpiar()">Limpiar</button> }
+  </form>
+
+  @if (cargando && !materiales.length) {
+    <div class="panel status-state" aria-live="polite"><span class="spinner"></span><strong>Consultando el mercado</strong><p>Estamos conectando con el servicio público de RECOPE.</p></div>
+  } @else if (error) {
+    <div class="panel status-state" role="alert"><span class="error-icon">!</span><strong>No pudimos cargar los datos</strong><p>{{ error }}</p><button class="retry-button" type="button" (click)="cargar()">Reintentar</button></div>
+  } @else {
+    <div class="market-grid">
+      @for (material of materiales; track material.id; let primero = $first) {
+        <article class="market-card" [class.featured]="primero">
+          <div><p class="metric-label">{{ material.nomprod }}</p><p class="market-value">{{ precioActual(material) | number:'1.2-2' }}</p></div>
+          <span class="change" [class.negative]="cambio(material) < 0">{{ cambio(material) > 0 ? '+' : '' }}{{ cambio(material) | number:'1.2-2' }}</span>
+        </article>
+      }
+    </div>
+
+    <div class="panel">
+      <div class="panel-toolbar"><h2 class="panel-title">Histórico por periodo <span class="result-count">{{ periodos.length }} periodos</span></h2><span class="unit-note">Valores según unidad reportada por la fuente</span></div>
+      <div class="table-scroll"><table class="data-table international-table">
+        <thead><tr><th>Producto</th>@for (periodo of periodos; track periodo.desde) { <th>{{ periodoTexto(periodo) }}</th> }</tr></thead>
+        <tbody>@for (material of materiales; track material.id) { <tr><td class="product-cell"><strong>{{ material.nomprod }}</strong><small>Código {{ material.id }}</small></td>@for (precio of material.precios; track $index) { <td class="money">{{ precio | number:'1.2-2' }}</td> }</tr> }</tbody>
+      </table></div>
+    </div>
+  }
+</section>

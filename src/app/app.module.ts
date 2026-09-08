@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PrecioInternacionalComponent } from './componet/precio-internacional/precio-internacional.component';
@@ -16,6 +17,7 @@ import { PreciosPlantelComponent } from './componet/precios-plantel/precios-plan
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [provideHttpClient()],

@@ -1,0 +1,11 @@
+{
+  "/api/recope": {
+    "target": "https://api.recope.go.cr",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/recope": ""
+    },
+    "logLevel": "warn"
+  }
+}

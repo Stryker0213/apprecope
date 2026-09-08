@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:sites": "ng build && node scripts/prepare-sites.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:apprecope": "node dist/apprecope/server/server.mjs"
