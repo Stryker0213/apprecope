@@ -1,0 +1,5 @@
+@if (error) {
+  <div class="panel status-state" role="alert"><span class="error-icon">!</span><strong>No pudimos cargar los datos</strong><p>{{ error }}</p><button class="retry-button" type="button" (click)="reintentar.emit()">Reintentar</button></div>
+} @else {
+  <div class="panel status-state" aria-live="polite"><span class="spinner"></span><strong>{{ titulo }}</strong><p>Estamos conectando con el servicio público de RECOPE.</p></div>
+}
