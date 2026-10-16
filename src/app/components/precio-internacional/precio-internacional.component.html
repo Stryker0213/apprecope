@@ -12,9 +12,9 @@
   </form>
 
   @if (cargando && !materiales.length) {
-    <div class="panel status-state" aria-live="polite"><span class="spinner"></span><strong>Consultando el mercado</strong><p>Estamos conectando con el servicio público de RECOPE.</p></div>
+    <app-estado-consulta titulo="Consultando el mercado" />
   } @else if (error) {
-    <div class="panel status-state" role="alert"><span class="error-icon">!</span><strong>No pudimos cargar los datos</strong><p>{{ error }}</p><button class="retry-button" type="button" (click)="cargar()">Reintentar</button></div>
+    <app-estado-consulta [error]="error" (reintentar)="cargar()" />
   } @else {
     <div class="market-grid">
       @for (material of materiales; track material.id; let primero = $first) {

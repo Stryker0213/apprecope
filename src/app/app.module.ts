@@ -4,9 +4,10 @@ import { provideHttpClient} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PrecioInternacionalComponent } from './componet/precio-internacional/precio-internacional.component';
-import { PreciosConsumidorComponent } from './componet/precios-consumidor/precios-consumidor.component';
-import { PreciosPlantelComponent } from './componet/precios-plantel/precios-plantel.component';
+import { PrecioInternacionalComponent } from './components/precio-internacional/precio-internacional.component';
+import { PreciosConsumidorComponent } from './components/precios-consumidor/precios-consumidor.component';
+import { PreciosPlantelComponent } from './components/precios-plantel/precios-plantel.component';
+import { EstadoConsultaComponent } from './shared/estado-consulta/estado-consulta.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { PreciosPlantelComponent } from './componet/precios-plantel/precios-plan
     PrecioInternacionalComponent,
     PreciosConsumidorComponent,
     PreciosPlantelComponent,
+    EstadoConsultaComponent,
   ],
   imports: [
     BrowserModule,

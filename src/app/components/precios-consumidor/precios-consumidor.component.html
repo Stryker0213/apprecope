@@ -15,9 +15,9 @@
   </header>
 
   @if (cargando && !precios.length) {
-    <div class="panel status-state" aria-live="polite"><span class="spinner"></span><strong>Consultando precios vigentes</strong><p>Estamos conectando con el servicio público de RECOPE.</p></div>
+    <app-estado-consulta titulo="Consultando precios vigentes" />
   } @else if (error) {
-    <div class="panel status-state" role="alert"><span class="error-icon">!</span><strong>No pudimos cargar los datos</strong><p>{{ error }}</p><button class="retry-button" type="button" (click)="cargar()">Reintentar</button></div>
+    <app-estado-consulta [error]="error" (reintentar)="cargar()" />
   } @else {
     <div class="metric-grid" aria-label="Combustibles principales">
       @for (item of destacados; track item.id; let primero = $first) {
